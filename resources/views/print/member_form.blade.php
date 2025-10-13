@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Print Member Form — {{ $member->member_no }}</title>
+  <title>Print Member Form - {{ $member->member_no }}</title>
   @vite(['resources/css/app.css'])
   <style>
     @media print {
