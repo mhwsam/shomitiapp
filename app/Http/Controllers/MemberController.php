@@ -29,9 +29,28 @@ class MemberController extends Controller
     public function store(Request $r)
     {
         $data = $r->validate([
-            'full_name_bn'=>'required|string|max:255',
-            'mobile'=>'required|string|max:30',
-            // add other fields as needed with validation rules…
+            'full_name_bn'      => 'required|string|max:255',
+            'full_name_en'      => 'nullable|string|max:255',
+            'father_name'       => 'nullable|string|max:255',
+            'mother_name'       => 'nullable|string|max:255',
+            'spouse_name'       => 'nullable|string|max:255',
+            'gender'            => 'nullable|in:male,female,other',
+            'dob'               => 'nullable|date',
+            'nid_no'            => 'nullable|string|max:255',
+            'mobile'            => 'required|string|max:30',
+            'email'             => 'nullable|email|max:255',
+            'occupation'        => 'nullable|string|max:255',
+            'present_address'   => 'nullable|string',
+            'permanent_address' => 'nullable|string',
+            'ward'              => 'nullable|string|max:255',
+            'post_office'       => 'nullable|string|max:255',
+            'thana'             => 'nullable|string|max:255',
+            'district'          => 'nullable|string|max:255',
+            'postal_code'       => 'nullable|string|max:20',
+            'join_date'         => 'nullable|date',
+            'status'            => 'nullable|in:active,inactive',
+            'remarks'           => 'nullable|string',
+            'photo'             => 'nullable|image|max:2048',
         ]);
         // auto member no
         $lastId = (Member::max('id') ?? 0) + 1;
@@ -39,6 +58,9 @@ class MemberController extends Controller
 
         if ($r->hasFile('photo')) {
             $data['photo_path'] = $r->file('photo')->store('members','public');
+        }
+        if (empty($data['status'])) {
+            $data['status'] = 'active';
         }
 
         $member = Member::create($data);
@@ -52,11 +74,33 @@ class MemberController extends Controller
     public function update(Request $r, Member $member)
     {
         $data = $r->validate([
-            'full_name_bn'=>'required|string|max:255',
-            'mobile'=>'required|string|max:30',
-            // …
+            'full_name_bn'      => 'required|string|max:255',
+            'full_name_en'      => 'nullable|string|max:255',
+            'father_name'       => 'nullable|string|max:255',
+            'mother_name'       => 'nullable|string|max:255',
+            'spouse_name'       => 'nullable|string|max:255',
+            'gender'            => 'nullable|in:male,female,other',
+            'dob'               => 'nullable|date',
+            'nid_no'            => 'nullable|string|max:255',
+            'mobile'            => 'required|string|max:30',
+            'email'             => 'nullable|email|max:255',
+            'occupation'        => 'nullable|string|max:255',
+            'present_address'   => 'nullable|string',
+            'permanent_address' => 'nullable|string',
+            'ward'              => 'nullable|string|max:255',
+            'post_office'       => 'nullable|string|max:255',
+            'thana'             => 'nullable|string|max:255',
+            'district'          => 'nullable|string|max:255',
+            'postal_code'       => 'nullable|string|max:20',
+            'join_date'         => 'nullable|date',
+            'status'            => 'nullable|in:active,inactive',
+            'remarks'           => 'nullable|string',
+            'photo'             => 'nullable|image|max:2048',
         ]);
         if ($r->hasFile('photo')) {
+            if (!empty($member->photo_path)) {
+                Storage::disk('public')->delete($member->photo_path);
+            }
             $data['photo_path'] = $r->file('photo')->store('members','public');
         }
         $member->update($data);
