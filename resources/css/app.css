@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components{
+  .btn { @apply inline-flex items-center rounded-xl border px-4 py-2 text-sm font-medium; }
+  .btn-primary { @apply btn bg-blue-600 text-white hover:bg-blue-700 border-transparent; }
+}
+
+@media print {
+  .no-print { display:none !important; }
+  .page-break { page-break-after:always; }
+}
