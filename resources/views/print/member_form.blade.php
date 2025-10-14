@@ -358,6 +358,7 @@
 
         $memberName = $member->full_name_bn ?: $member->full_name_en ?? '';
         $fatherOrSpouse = $member->father_name ?: $member->spouse_name ?? '';
+        $mother = $member->mother_name ?: $member->mother_name ?? '';
         $present = $member->present_address;
         $permanent = $member->permanent_address;
         $district = $member->district;
@@ -420,18 +421,31 @@
                     @endif
                 </span>
             </div>
+            <div class="f"><span class="label">প্রতিষ্ঠানের নাম :</span><span class="dots">
+                    @if ($institution)
+                        <span class="value">{{ $institution }}</span>
+                    @endif
+                </span>
+            </div>
+                <div class="f"><span class="label">পেশা :</span><span class="dots">
+                    @if ($occupation)
+                        <span class="value">{{ $occupation }}</span>
+                    @endif
+                </span>
+            </div>
             <div class="f"><span class="label">পিতার/স্বামীর নাম :</span><span class="dots">
                     @if ($fatherOrSpouse)
                         <span class="value">{{ $fatherOrSpouse }}</span>
                     @endif
                 </span>
             </div>
-            <div class="f"><span class="label">পেশা :</span><span class="dots">
-                    @if ($occupation)
-                        <span class="value">{{ $occupation }}</span>
+                 <div class="f"><span class="label">মাতার নাম :</span><span class="dots">
+                    @if ($mother)
+                        <span class="value">{{ $mother }}</span>
                     @endif
                 </span>
             </div>
+        
             <div class="f"><span class="label">গ্রাম/মহল্লা :</span><span class="dots">
                     @if ($present)
                         <span class="value">{{ $present }}</span>
