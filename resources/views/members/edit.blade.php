@@ -8,6 +8,7 @@
       <h1 class="mt-3 text-3xl font-semibold text-slate-900">Edit Member</h1>
       <p class="mt-2 max-w-2xl text-sm text-slate-600">Update details for {{ $member->full_name_bn ?? $member->full_name_en }} to keep records accurate.</p>
     </div>
+    
     <a href="{{ route('members.show',$member) }}" class="btn-outline self-start">View Profile</a>
   </section>
 

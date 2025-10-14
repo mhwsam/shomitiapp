@@ -78,6 +78,11 @@ class MemberController extends Controller
 
     public function show(Member $member) { return view('members.show', compact('member')); }
 
+    public function details(Member $member)
+    {
+        return view('members.details', compact('member'));
+    }
+
     public function edit(Member $member) { return view('members.edit', compact('member')); }
 
     public function update(Request $r, Member $member)

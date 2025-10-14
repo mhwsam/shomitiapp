@@ -115,6 +115,15 @@
     $district = $member->district;
     $mobile = $member->mobile;
     $occupation = $member->occupation;
+    $institution = $member->institution_name;
+    $religionValue = $member->religion;
+    $nationalityValue = $member->nationality;
+    $bloodGroup = $member->blood_group;
+    $nomineeName = $member->nominee_name;
+    $nomineeRelation = $member->nominee_relation;
+    $nomineeNid = $member->nominee_nid;
+    $nomineeReligion = $member->nominee_religion;
+    $nomineeNationality = $member->nominee_nationality;
     $memberNo = $member->member_no;
     $joinDate = $formatDate($member->join_date);
   @endphp
@@ -169,6 +178,16 @@
       </div>
 
       <div class="f"><span class="label">জাতীয় পরিচয় পত্র নং :</span><span class="dots">@if($member->nid_no)<span class="value">{{ $toBn($member->nid_no) }}</span>@endif</span></div>
+      <div class="f"><span class="label">Prothisthan er Naam :</span><span class="dots">@if($institution)<span class="value">{{ $institution }}</span>@endif</span></div>
+      <div class="f"><span class="label">Religion :</span><span class="dots">@if($religionValue)<span class="value">{{ $religionValue }}</span>@endif</span></div>
+      <div class="f"><span class="label">Nationality :</span><span class="dots">@if($nationalityValue)<span class="value">{{ $nationalityValue }}</span>@endif</span></div>
+      <div class="f"><span class="label">Blood Group :</span><span class="dots">@if($bloodGroup)<span class="value">{{ $bloodGroup }}</span>@endif</span></div>
+      <div class="f"><span class="label">Nominee Name :</span><span class="dots">@if($nomineeName)<span class="value">{{ $nomineeName }}</span>@endif</span></div>
+      <div class="f"><span class="label">Relation with Nominee :</span><span class="dots">@if($nomineeRelation)<span class="value">{{ $nomineeRelation }}</span>@endif</span></div>
+      <div class="f"><span class="label">Nominee NID :</span><span class="dots">@if($nomineeNid)<span class="value">{{ $toBn($nomineeNid) }}</span>@endif</span></div>
+      <div class="f"><span class="label">Nominee Religion :</span><span class="dots">@if($nomineeReligion)<span class="value">{{ $nomineeReligion }}</span>@endif</span></div>
+      <div class="f"><span class="label">Nominee Nationality :</span><span class="dots">@if($nomineeNationality)<span class="value">{{ $nomineeNationality }}</span>@endif</span></div>
+
 
       <div class="f"><span class="label">মনোনীত সদস্যের নাম :</span><span class="dots"></span></div>
 

@@ -9,6 +9,7 @@
       <p class="mt-2 text-sm text-slate-500">Member no. {{ $member->member_no }} • Status: {{ ucfirst($member->status ?? 'inactive') }}</p>
     </div>
     <div class="flex flex-wrap gap-3">
+      <a href="{{ route('members.details',$member) }}" class="btn-outline">View Details</a>
       <a href="{{ route('members.edit',$member) }}" class="btn-outline">Edit Details</a>
       <a href="{{ route('members.print',$member) }}" class="btn-primary">Print Profile</a>
     </div>

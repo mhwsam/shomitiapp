@@ -28,6 +28,7 @@ Route::middleware(['auth'])->group(function () {
 
     // Members
     Route::resource('members', MemberController::class);
+    Route::get('/members/{member}/details', [MemberController::class, 'details'])->name('members.details');
     Route::get('/members/{member}/print', [MemberPrintController::class, 'show'])->name('members.print');
 
     // Collections
