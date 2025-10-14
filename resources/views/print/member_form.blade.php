@@ -445,8 +445,14 @@
                     @endif
                 </span>
             </div>
+                       <div class="f"><span class="label">জাতীয় পরিচয় পত্র নং :</span><span class="dots">
+                    @if ($member->nid_no)
+                        <span class="value">{{ $toBn($member->nid_no) }}</span>
+                    @endif
+                </span>
+            </div>
         
-            <div class="f"><span class="label">গ্রাম/মহল্লা :</span><span class="dots">
+            <div class="f"><span class="label">বর্তমান ঠিকানা :</span><span class="dots">
                     @if ($present)
                         <span class="value">{{ $present }}</span>
                     @endif
@@ -460,7 +466,7 @@
             </div>
 
             <div class="f pair">
-                <span class="label">ধর্ম :</span><span class="dots"></span>
+                <span class="label">ধর্ম :</span>{{ $religionValue }}<span class="dots"></span>
                 <span class="label">মোবাইল নং :</span><span class="dots">
                     @if ($mobile)
                         <span class="value">{{ $toBn($mobile) }}</span>
@@ -469,16 +475,13 @@
             </div>
 
             <div class="f pair">
-                <span class="label">জাতীয়তা :</span><span class="dots"><span class="value">বাংলাদেশী</span></span>
-                <span class="label">রক্তের গ্রুপ :</span><span class="dots"></span>
-            </div>
-
-            <div class="f"><span class="label">জাতীয় পরিচয় পত্র নং :</span><span class="dots">
-                    @if ($member->nid_no)
-                        <span class="value">{{ $toBn($member->nid_no) }}</span>
-                    @endif
+                 <span class="label">জাতীয়তা :</span>{{ $nationalityValue }}<span class="dots"></span>
+                <span class="label">রক্তের গ্রুপ :</span>{{ $bloodGroup }}<span class="dots">
+              
                 </span>
             </div>
+
+ 
             <div class="f"><span class="label">Prothisthan er Naam :</span><span class="dots">
                     @if ($institution)
                         <span class="value">{{ $institution }}</span>
