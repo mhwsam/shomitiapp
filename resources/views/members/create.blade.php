@@ -54,6 +54,22 @@
           <label for="nid_no">NID / Identification No.</label>
           <input id="nid_no" name="nid_no" value="{{ old('nid_no') }}">
         </div>
+        <div class="space-y-2">
+          <label for="institution_name">Prothisthan er Naam</label>
+          <input id="institution_name" name="institution_name" value="{{ old('institution_name') }}">
+        </div>
+        <div class="space-y-2">
+          <label for="religion">Religion</label>
+          <input id="religion" name="religion" value="{{ old('religion') }}">
+        </div>
+        <div class="space-y-2">
+          <label for="nationality">Nationality</label>
+          <input id="nationality" name="nationality" value="{{ old('nationality') }}">
+        </div>
+        <div class="space-y-2">
+          <label for="blood_group">Blood Group</label>
+          <input id="blood_group" name="blood_group" value="{{ old('blood_group') }}">
+        </div>
       </div>
     </section>
 
@@ -111,6 +127,35 @@
         <div class="space-y-2">
           <label for="postal_code">Postal Code</label>
           <input id="postal_code" name="postal_code" value="{{ old('postal_code') }}">
+        </div>
+      </div>
+    </section>
+
+    <section class="surface-panel p-6 sm:p-8 space-y-6">
+      <div>
+        <h2 class="text-lg font-semibold text-slate-900">Nominee Details</h2>
+        <p class="text-sm text-slate-500">Nominee information for member benefits.</p>
+      </div>
+      <div class="grid gap-6 sm:grid-cols-2">
+        <div class="space-y-2">
+          <label for="nominee_name">Nominee Name</label>
+          <input id="nominee_name" name="nominee_name" value="{{ old('nominee_name') }}">
+        </div>
+        <div class="space-y-2">
+          <label for="nominee_relation">Relation with the Nominee</label>
+          <input id="nominee_relation" name="nominee_relation" value="{{ old('nominee_relation') }}">
+        </div>
+        <div class="space-y-2">
+          <label for="nominee_nid">Nominee NID</label>
+          <input id="nominee_nid" name="nominee_nid" value="{{ old('nominee_nid') }}">
+        </div>
+        <div class="space-y-2">
+          <label for="nominee_religion">Nominee Religion</label>
+          <input id="nominee_religion" name="nominee_religion" value="{{ old('nominee_religion') }}">
+        </div>
+        <div class="space-y-2">
+          <label for="nominee_nationality">Nominee Nationality</label>
+          <input id="nominee_nationality" name="nominee_nationality" value="{{ old('nominee_nationality') }}">
         </div>
       </div>
     </section>

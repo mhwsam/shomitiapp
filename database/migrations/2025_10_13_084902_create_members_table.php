@@ -22,6 +22,15 @@ public function up(): void
         $table->enum('gender', ['male','female','other'])->nullable();
         $table->date('dob')->nullable();
         $table->string('nid_no')->nullable();
+        $table->string('institution_name')->nullable();
+        $table->string('religion')->nullable();
+        $table->string('nationality')->nullable();
+        $table->string('blood_group')->nullable();
+        $table->string('nominee_name')->nullable();
+        $table->string('nominee_relation')->nullable();
+        $table->string('nominee_nid')->nullable();
+        $table->string('nominee_religion')->nullable();
+        $table->string('nominee_nationality')->nullable();
         $table->string('mobile')->index();
         $table->string('email')->nullable();
         $table->string('occupation')->nullable();

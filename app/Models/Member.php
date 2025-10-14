@@ -12,7 +12,9 @@ class Member extends Model
 
     protected $fillable = [
         'member_no','full_name_bn','full_name_en','father_name','mother_name','spouse_name',
-        'gender','dob','nid_no','mobile','email','occupation',
+        'gender','dob','nid_no','institution_name','religion','nationality','blood_group',
+        'nominee_name','nominee_relation','nominee_nid','nominee_religion','nominee_nationality',
+        'mobile','email','occupation',
         'present_address','permanent_address','ward','post_office','thana','district','postal_code',
         'join_date','status','photo_path','remarks'
     ];
