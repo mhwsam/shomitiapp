@@ -50,6 +50,7 @@
             <th class="px-6 py-3">Paid</th>
             <th class="px-6 py-3">Method</th>
             <th class="px-6 py-3">Paid On</th>
+            <th class="px-6 py-3">Receipt</th>
           </tr>
         </thead>
         <tbody class="bg-white">
@@ -64,10 +65,20 @@
               <td class="px-6 py-4 font-semibold text-emerald-600">৳{{ number_format($p->amount_paid) }}</td>
               <td class="px-6 py-4 text-slate-600">{{ $p->method ?? 'N/A' }}</td>
               <td class="px-6 py-4 text-slate-600">{{ optional($p->paid_on)->format('d M @ h:i A') }}</td>
+              <td class="px-6 py-4">
+                <div class="flex flex-wrap gap-2">
+                  <a href="{{ route('collections.receipt.show', $p) }}" class="btn-ghost text-xs font-semibold text-blue-600 hover:text-blue-800">
+                    View
+                  </a>
+                  <a href="{{ route('collections.receipt.download', $p) }}" class="btn-ghost text-xs font-semibold text-slate-600 hover:text-slate-900" target="_blank" rel="noopener">
+                    PDF
+                  </a>
+                </div>
+              </td>
             </tr>
           @empty
             <tr>
-              <td colspan="6" class="px-6 py-10 text-center text-sm text-slate-500">No payments found for this period.</td>
+              <td colspan="7" class="px-6 py-10 text-center text-sm text-slate-500">No payments found for this period.</td>
             </tr>
           @endforelse
         </tbody>

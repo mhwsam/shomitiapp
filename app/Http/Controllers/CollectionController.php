@@ -6,12 +6,15 @@ use Illuminate\Http\Request;
 use App\Models\{Member, Payment, Setting};
 use Illuminate\Validation\Rule;
 use Carbon\Carbon;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class CollectionController extends Controller
 {
     public function create(Request $r)
     {
-        $members = Member::orderBy('member_no')->get(['id','member_no','full_name_bn','full_name_en']);
+        $members = Member::active()
+            ->orderBy('member_no')
+            ->get(['id', 'member_no', 'full_name_bn', 'full_name_en']);
         $year  = (int)($r->year ?? now()->year);
         $month = (int)($r->month ?? now()->month);
         $defaultDue = (int) Setting::get('monthly_fee_default', 200);
@@ -43,6 +46,39 @@ class CollectionController extends Controller
             ]
         );
 
-        return redirect()->route('dashboard')->with('ok','Payment recorded.');
+        return redirect()
+            ->route('collections.create')
+            ->with('ok', 'Payment recorded successfully. Download the receipt below.')
+            ->with('receipt_url', route('collections.receipt.download', $payment));
+    }
+
+    public function showReceipt(Payment $payment)
+    {
+        return view('collections.receipt', $this->receiptContext($payment));
+    }
+
+    public function downloadReceipt(Payment $payment)
+    {
+        $context = $this->receiptContext($payment);
+
+        $pdf = Pdf::loadView('collections.receipt-pdf', $context)
+            ->setPaper('a5', 'portrait');
+
+        $fileName = sprintf('receipt-%s.pdf', str_pad((string) $payment->id, 5, '0', STR_PAD_LEFT));
+
+        return $pdf->download($fileName);
+    }
+
+    protected function receiptContext(Payment $payment): array
+    {
+        $payment->loadMissing(['member', 'collector']);
+
+        return [
+            'payment' => $payment,
+            'period' => Carbon::createFromDate($payment->year, $payment->month, 1)->format('F Y'),
+            'committeeName' => Setting::get('committee_name', 'Shomiti Admin'),
+            'currency' => Setting::get('currency', 'BDT'),
+            'generatedAt' => now(),
+        ];
     }
 }

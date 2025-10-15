@@ -34,6 +34,8 @@ Route::middleware(['auth'])->group(function () {
     // Collections
     Route::get('/collections/create', [CollectionController::class, 'create'])->name('collections.create');
     Route::post('/collections', [CollectionController::class, 'store'])->name('collections.store');
+    Route::get('/collections/{payment}/receipt', [CollectionController::class, 'showReceipt'])->name('collections.receipt.show');
+    Route::get('/collections/{payment}/receipt/download', [CollectionController::class, 'downloadReceipt'])->name('collections.receipt.download');
 
     // Reports
     Route::get('/reports/unpaid', [ReportController::class, 'unpaid'])->name('reports.unpaid');

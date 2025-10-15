@@ -14,6 +14,18 @@
   </section>
 
   <section class="surface-panel p-6 sm:p-8">
+    @if (session('receipt_url'))
+      <div class="mb-6 flex flex-col gap-3 rounded-lg border border-slate-200 bg-slate-50 p-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h2 class="text-base font-semibold text-slate-900">Receipt ready</h2>
+          <p class="text-sm text-slate-600">Download the PDF receipt for the last recorded payment.</p>
+        </div>
+        <a href="{{ session('receipt_url') }}" class="btn-primary" target="_blank" rel="noopener">
+          Download Receipt
+        </a>
+      </div>
+    @endif
+
     <form method="POST" action="{{ route('collections.store') }}" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       @csrf
 
