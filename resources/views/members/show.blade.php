@@ -45,6 +45,16 @@
             <dd class="rounded-lg border border-slate-200 bg-white p-4 text-sm text-slate-700">{{ $member->remarks }}</dd>
           </div>
         @endif
+        <div class="space-y-1 sm:col-span-2">
+          <dt class="text-sm font-semibold text-slate-600">Nominee Photo</dt>
+          <dd class="text-base font-medium text-slate-700">
+            @if($member->nominee_photo_path)
+              <img src="{{ asset('storage/'.$member->nominee_photo_path) }}" alt="{{ $member->nominee_name ?? 'Nominee photo' }}" class="h-24 w-24 rounded-xl border border-slate-200 object-cover shadow-sm">
+            @else
+              <span class="text-sm text-slate-500">Not provided</span>
+            @endif
+          </dd>
+        </div>
       </dl>
     </div>
 

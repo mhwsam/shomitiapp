@@ -52,6 +52,7 @@
           ['label' => 'Nominee NID', 'value' => $member->nominee_nid],
           ['label' => 'Nominee Religion', 'value' => $member->nominee_religion],
           ['label' => 'Nominee Nationality', 'value' => $member->nominee_nationality],
+          ['label' => 'Nominee Photo', 'value' => $member->nominee_photo_path ? asset('storage/'.$member->nominee_photo_path) : null, 'isImage' => true],
       ],
   ];
 @endphp
@@ -79,12 +80,18 @@
               <div class="space-y-1">
                 <dt class="text-xs font-semibold uppercase tracking-wide text-slate-500">{{ $field['label'] }}</dt>
                 <dd class="text-sm font-medium text-slate-800">
-                  @php $value = $field['value'] ?? null; @endphp
-                  @if(isset($field['asHtml']) && $field['asHtml'])
-                    {!! $value ?? 'Not provided' !!}
+                @php $value = $field['value'] ?? null; @endphp
+                @if(isset($field['asHtml']) && $field['asHtml'])
+                  {!! $value ?? 'Not provided' !!}
+                @elseif(!empty($field['isImage']))
+                  @if($value)
+                    <img src="{{ $value }}" alt="{{ $member->nominee_name ?? 'Nominee photo' }}" class="h-24 w-24 rounded-xl border border-slate-200 object-cover shadow-sm">
                   @else
-                    {{ $value ?? 'Not provided' }}
+                    <span class="text-slate-500">Not provided</span>
                   @endif
+                @else
+                  {{ $value ?? 'Not provided' }}
+                @endif
                 </dd>
               </div>
             @endforeach

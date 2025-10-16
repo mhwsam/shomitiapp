@@ -16,7 +16,7 @@ class Member extends Model
         'nominee_name','nominee_relation','nominee_nid','nominee_religion','nominee_nationality',
         'mobile','email','occupation',
         'present_address','permanent_address','ward','post_office','thana','district','postal_code',
-        'join_date','status','photo_path','remarks'
+        'join_date','status','photo_path','nominee_photo_path','remarks'
     ];
 
     public function payments()

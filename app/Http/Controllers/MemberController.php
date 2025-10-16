@@ -60,6 +60,7 @@ class MemberController extends Controller
             'status'            => 'nullable|in:active,inactive',
             'remarks'           => 'nullable|string',
             'photo'             => 'nullable|image|max:2048',
+            'nominee_photo'     => 'nullable|image|max:2048',
         ]);
         // auto member no
         $lastId = (Member::max('id') ?? 0) + 1;
@@ -67,6 +68,9 @@ class MemberController extends Controller
 
         if ($r->hasFile('photo')) {
             $data['photo_path'] = $r->file('photo')->store('members','public');
+        }
+        if ($r->hasFile('nominee_photo')) {
+            $data['nominee_photo_path'] = $r->file('nominee_photo')->store('members/nominees','public');
         }
         if (empty($data['status'])) {
             $data['status'] = 'active';
@@ -119,12 +123,19 @@ class MemberController extends Controller
             'status'            => 'nullable|in:active,inactive',
             'remarks'           => 'nullable|string',
             'photo'             => 'nullable|image|max:2048',
+            'nominee_photo'     => 'nullable|image|max:2048',
         ]);
         if ($r->hasFile('photo')) {
             if (!empty($member->photo_path)) {
                 Storage::disk('public')->delete($member->photo_path);
             }
             $data['photo_path'] = $r->file('photo')->store('members','public');
+        }
+        if ($r->hasFile('nominee_photo')) {
+            if (!empty($member->nominee_photo_path)) {
+                Storage::disk('public')->delete($member->nominee_photo_path);
+            }
+            $data['nominee_photo_path'] = $r->file('nominee_photo')->store('members/nominees','public');
         }
         $member->update($data);
         return back()->with('ok','Member updated');

@@ -277,11 +277,19 @@
             width: 32mm;
             height: 40mm;
             border: 1px solid #111;
+            background: #fafafa;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 12px;
             color: #666;
+            overflow: hidden;
+        }
+
+        .stamp img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .signs {
@@ -373,6 +381,7 @@
         $nomineeNid = $member->nominee_nid;
         $nomineeReligion = $member->nominee_religion;
         $nomineeNationality = $member->nominee_nationality;
+        $nomineePhotoPath = $member->nominee_photo_path;
         $memberNo = $member->member_no;
         $joinDate = $formatDate($member->join_date);
     @endphp
@@ -518,7 +527,13 @@
                     <li>কার্যকরী কমিটির সাথে আলোচনা সাপেক্ষে সদস্যের নাম পরিবর্তন করা যাবে।</li>
                 </ol>
             </div>
-            <div class="stamp">নমিনির ছবি</div>
+            <div class="stamp">
+                @if ($nomineePhotoPath)
+                    <img src="{{ asset('storage/' . $nomineePhotoPath) }}" alt="{{ $nomineeName ?: $memberName }}" />
+                @else
+                    নমিনির ছবি
+                @endif
+            </div>
         </div>
 
         <div class="signs">
