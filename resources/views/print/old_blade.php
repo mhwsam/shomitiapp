@@ -498,14 +498,70 @@
                 <span class="label">ধর্ম :</span>{{$nomineeReligion }}<span class="dots"></span>
                 <span class="label">জাতীয়তা :</span>{{$nomineeNationality}}<span class="dots"></span>
             </div>
+            <div class="f"><span class="label">Religion :</span><span class="dots">
+                    @if ($religionValue)
+                        <span class="value">{{ $religionValue }}</span>
+                    @endif
+                </span>
+            </div>
+            <div class="f"><span class="label">Nationality :</span><span class="dots">
+                    @if ($nationalityValue)
+                        <span class="value">{{ $nationalityValue }}</span>
+                    @endif
+                </span>
+            </div>
+            <div class="f"><span class="label">Blood Group :</span><span class="dots">
+                    @if ($bloodGroup)
+                        <span class="value">{{ $bloodGroup }}</span>
+                    @endif
+                </span>
+            </div>
+            <div class="f"><span class="label">Nominee Name :</span><span class="dots">
+                    @if ($nomineeName)
+                        <span class="value">{{ $nomineeName }}</span>
+                    @endif
+                </span>
+            </div>
+            <div class="f"><span class="label">Relation with Nominee :</span><span class="dots">
+                    @if ($nomineeRelation)
+                        <span class="value">{{ $nomineeRelation }}</span>
+                    @endif
+                </span>
+            </div>
+            <div class="f"><span class="label">Nominee NID :</span><span class="dots">
+                    @if ($nomineeNid)
+                        <span class="value">{{ $toBn($nomineeNid) }}</span>
+                    @endif
+                </span>
+            </div>
+            <div class="f"><span class="label">Nominee Religion :</span><span class="dots">
+                    @if ($nomineeReligion)
+                        <span class="value">{{ $nomineeReligion }}</span>
+                    @endif
+                </span>
+            </div>
+            <div class="f"><span class="label">Nominee Nationality :</span><span class="dots">
+                    @if ($nomineeNationality)
+                        <span class="value">{{ $nomineeNationality }}</span>
+                    @endif
+                </span>
+            </div>
 
 
+            <div class="f"><span class="label">মনোনীত সদস্যের নাম :</span><span class="dots"></span></div>
 
+            <div class="f pair">
+                <span class="label">সম্পর্ক :</span><span class="dots"></span>
+                <span class="label">বয়স :</span><span class="dots"></span>
+            </div>
 
-
-
-
-
+            <div class="f"><span class="label">মনোনীত সদস্যের / অন্যান্য নিবন্ধ নং :</span><span
+                    class="dots"></span></div>
+            <div class="f"><span class="label">ঠিকানা :</span><span class="dots">
+                    @if ($district)
+                        <span class="value">{{ $district }}</span>
+                    @endif
+                </span></div>
         </div>
 
         <div class="rules-wrap">
