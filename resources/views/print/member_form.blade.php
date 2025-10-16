@@ -543,12 +543,28 @@
                 </span>
             </div>
 
-            <div class="f pair">
+            {{-- <div class="f pair">
                 <span class="label">জাতীয়তা :</span>{{ $nationalityValue }}<span class="dots"></span>
                 <span class="label">রক্তের গ্রুপ :</span>{{ $bloodGroup }}<span class="dots">
 
                 </span>
+            </div> --}}
+            <div class="f pair">
+                <span class="label">জাতীয়তা :</span>
+                <span class="dots">
+                    @if ($nationalityValue)
+                        <span class="value">{{ $nationalityValue }}</span>
+                    @endif
+                </span>
+
+                <span class="label">রক্তের গ্রুপ :</span>
+                <span class="dots">
+                    @if ($bloodGroup)
+                        <span class="value">{{ $bloodGroup }}</span>
+                    @endif
+                </span>
             </div>
+
             <div class="f pair">
                 <span class="label">নমিনির নাম :</span>{{ $nomineeName }}<span class="dots"></span>
                 <span class="label">সম্পর্ক :</span>{{ $nomineeRelation }}<span class="dots">
