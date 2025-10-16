@@ -11,7 +11,7 @@
             margin: 12mm;
         }
 
-        @media print {
+        /* @media print {
 
             html,
             body {
@@ -25,7 +25,66 @@
             .no-print {
                 display: none !important;
             }
+        } */
+        @media print {
+
+            html,
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                color: #000;
+                /* Make default text 100% black in print */
+            }
+
+            /* Force light-gray texts to solid black when printing */
+            .head-top,
+            .rules li,
+            .rules ol,
+            .formno {
+                color: #000 !important;
+            }
+
+            /* Make headings/labels crisp and bold in print */
+            .header .title {
+                color: #000 !important;
+                font-weight: 800;
+            }
+
+            .label {
+                font-weight: 600;
+                color: #000;
+            }
+
+            /* Normalize text weights for print clarity */
+            body {
+                font-weight: 500;
+            }
+
+            /* base */
+            .value {
+                font-weight: 600;
+            }
+
+            .no-print,
+            .no-print * {
+                display: none !important;
+            }
+
+            /* optional: remove page shadow when printing */
+            .page {
+                box-shadow: none !important;
+            }
+
+            /* field value slightly bolder */
         }
+
+        /* Softer on screen, darker in print */
+        body {
+            color: #111;
+        }
+
+        /* screen */
+
 
         body {
             margin: 0;
@@ -437,7 +496,7 @@
                     @endif
                 </span>
             </div>
-                <div class="f"><span class="label">পেশা :</span><span class="dots">
+            <div class="f"><span class="label">পেশা :</span><span class="dots">
                     @if ($occupation)
                         <span class="value">{{ $occupation }}</span>
                     @endif
@@ -449,19 +508,19 @@
                     @endif
                 </span>
             </div>
-                 <div class="f"><span class="label">মাতার নাম :</span><span class="dots">
+            <div class="f"><span class="label">মাতার নাম :</span><span class="dots">
                     @if ($mother)
                         <span class="value">{{ $mother }}</span>
                     @endif
                 </span>
             </div>
-                       <div class="f"><span class="label">জাতীয় পরিচয় পত্র নং :</span><span class="dots">
+            <div class="f"><span class="label">জাতীয় পরিচয় পত্র নং :</span><span class="dots">
                     @if ($member->nid_no)
                         <span class="value">{{ $toBn($member->nid_no) }}</span>
                     @endif
                 </span>
             </div>
-        
+
             <div class="f"><span class="label">বর্তমান ঠিকানা :</span><span class="dots">
                     @if ($present)
                         <span class="value">{{ $present }}</span>
@@ -485,28 +544,28 @@
             </div>
 
             <div class="f pair">
-                 <span class="label">জাতীয়তা :</span>{{ $nationalityValue }}<span class="dots"></span>
+                <span class="label">জাতীয়তা :</span>{{ $nationalityValue }}<span class="dots"></span>
                 <span class="label">রক্তের গ্রুপ :</span>{{ $bloodGroup }}<span class="dots">
-              
+
                 </span>
             </div>
-                 <div class="f pair">
-                 <span class="label">নমিনির নাম :</span>{{ $nomineeName }}<span class="dots"></span>
+            <div class="f pair">
+                <span class="label">নমিনির নাম :</span>{{ $nomineeName }}<span class="dots"></span>
                 <span class="label">সম্পর্ক :</span>{{ $nomineeRelation }}<span class="dots">
-              
+
                 </span>
             </div>
 
- 
+
             <div class="f"><span class="label">নমিনির এনআইডি/জন্ম নিবন্ধন নং :</span><span class="dots">
-                    @if ($nomineeNid )
-                        <span class="value">{{ $nomineeNid  }}</span>
+                    @if ($nomineeNid)
+                        <span class="value">{{ $nomineeNid }}</span>
                     @endif
                 </span>
             </div>
-                <div class="f pair">
-                <span class="label">ধর্ম :</span>{{$nomineeReligion }}<span class="dots"></span>
-                <span class="label">জাতীয়তা :</span>{{$nomineeNationality}}<span class="dots"></span>
+            <div class="f pair">
+                <span class="label">ধর্ম :</span>{{ $nomineeReligion }}<span class="dots"></span>
+                <span class="label">জাতীয়তা :</span>{{ $nomineeNationality }}<span class="dots"></span>
             </div>
 
 
