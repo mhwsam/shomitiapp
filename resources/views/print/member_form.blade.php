@@ -293,7 +293,7 @@
         }
 
         .signs {
-            margin-top: 18mm;
+            margin-top: 30mm;
             display: flex;
             justify-content: space-between;
             gap: 6mm;
@@ -304,7 +304,7 @@
         .sign {
             flex: 1;
             position: relative;
-            padding-top: 10mm;
+            padding-top: 4mm;
         }
 
         .sign::before {
