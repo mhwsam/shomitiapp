@@ -152,6 +152,7 @@
 
         .chip.red {
             background: #c62828;
+            margin-left: 24mm;
         }
 
         .formno {
