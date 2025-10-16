@@ -236,8 +236,8 @@
             display: flex;
             gap: 6mm;
             align-items: flex-start;
-            margin-top: 6mm;
-            border-top: 1px solid #ececec;
+            margin-top: 14mm;
+            /* border-top: 1px solid #ececec; */
             padding-top: 4mm;
         }
 
@@ -251,7 +251,7 @@
 
         .rules .title {
             position: absolute;
-            top: -8mm;
+            top: -12mm;
             left: 50%;
             transform: translateX(-50%);
             background: #d84343;
