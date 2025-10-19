@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Member;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
 class MemberController extends Controller
@@ -20,7 +20,7 @@ class MemberController extends Controller
                   ->orWhere('member_no','like',"%$search%");
             });
         }
-        $members = $q->orderBy('member_no')->paginate(20)->withQueryString();
+        $members = $q->orderBy('member_no')->paginate(10)->withQueryString();
         return view('members.index', compact('members'));
     }
 
@@ -80,7 +80,56 @@ class MemberController extends Controller
         return redirect()->route('members.show', $member)->with('ok','Member created');
     }
 
-    public function show(Member $member) { return view('members.show', compact('member')); }
+    public function show(Request $request, Member $member)
+    {
+        $viewMode = $request->get('view', 'monthly');
+        $yearFilter = $request->integer('year');
+        $monthFilter = $request->integer('month');
+
+        $availableYears = $member->payments()
+            ->select('year')
+            ->distinct()
+            ->orderByDesc('year')
+            ->pluck('year');
+
+        $monthOptions = collect(range(1, 12))->mapWithKeys(function ($month) {
+            return [$month => Carbon::createFromDate(null, $month, 1)->format('F')];
+        });
+
+        if ($viewMode === 'yearly') {
+            $paymentsQuery = $member->payments()
+                ->selectRaw('year, SUM(amount_due) as total_due, SUM(amount_paid) as total_paid, COUNT(*) as payments_count')
+                ->groupBy('year')
+                ->orderByDesc('year');
+
+            if ($yearFilter) {
+                $paymentsQuery->where('year', $yearFilter);
+            }
+
+            $payments = $paymentsQuery->paginate(12)->withQueryString();
+        } else {
+            $paymentsQuery = $member->payments()
+                ->with('collector')
+                ->when($yearFilter, fn ($q) => $q->where('year', $yearFilter))
+                ->when($monthFilter, fn ($q) => $q->where('month', $monthFilter))
+                ->orderByDesc('paid_on')
+                ->orderByDesc('year')
+                ->orderByDesc('month')
+                ->orderByDesc('id');
+
+            $payments = $paymentsQuery->paginate(12)->withQueryString();
+        }
+
+        return view('members.show', compact(
+            'member',
+            'payments',
+            'availableYears',
+            'monthOptions',
+            'viewMode',
+            'yearFilter',
+            'monthFilter'
+        ));
+    }
 
     public function details(Member $member)
     {

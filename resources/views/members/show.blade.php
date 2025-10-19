@@ -80,5 +80,122 @@
       </div>
     </div>
   </section>
+
+  <section class="surface-panel space-y-6 p-6">
+    <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+      <div>
+        <h2 class="text-lg font-semibold text-slate-900">Payment Activity</h2>
+        <p class="text-sm text-slate-500">Review this member's transactions by month or by year.</p>
+      </div>
+      <a href="{{ route('members.show', $member) }}" class="btn-outline text-sm">Reset filters</a>
+    </div>
+
+    <form method="get" action="{{ route('members.show', $member) }}" class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="flex flex-col gap-1">
+        <label for="view" class="text-sm font-semibold text-slate-600">View</label>
+        <select id="view" name="view" onchange="this.form.submit()">
+          <option value="monthly" @selected($viewMode === 'monthly')>Monthly</option>
+          <option value="yearly" @selected($viewMode === 'yearly')>Yearly</option>
+        </select>
+      </div>
+      <div class="flex flex-col gap-1">
+        <label for="year" class="text-sm font-semibold text-slate-600">Year</label>
+        <select id="year" name="year" onchange="this.form.submit()">
+          <option value="">All years</option>
+          @foreach($availableYears as $year)
+            <option value="{{ $year }}" @selected($yearFilter === (int) $year)>{{ $year }}</option>
+          @endforeach
+        </select>
+      </div>
+      <div class="flex flex-col gap-1">
+        <label for="month" class="text-sm font-semibold text-slate-600">Month</label>
+        <select id="month" name="month" @disabled($viewMode === 'yearly') onchange="this.form.submit()">
+          <option value="">All months</option>
+          @foreach($monthOptions as $value => $label)
+            <option value="{{ $value }}" @selected($monthFilter === (int) $value)>{{ $label }}</option>
+          @endforeach
+        </select>
+      </div>
+      <div class="flex items-end">
+        <button type="submit" class="btn-primary w-full">Apply filters</button>
+      </div>
+    </form>
+
+    @if($viewMode === 'yearly')
+      @if($payments->count())
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-slate-200 text-sm">
+            <thead class="bg-slate-50 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+              <tr>
+                <th scope="col" class="px-3 py-3">Year</th>
+                <th scope="col" class="px-3 py-3">Collections</th>
+                <th scope="col" class="px-3 py-3">Total Due</th>
+                <th scope="col" class="px-3 py-3">Total Paid</th>
+                <th scope="col" class="px-3 py-3">Outstanding</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 bg-white text-slate-700">
+              @foreach($payments as $payment)
+                <tr>
+                  <td class="px-3 py-3 font-semibold text-slate-900">{{ $payment->year }}</td>
+                  <td class="px-3 py-3">{{ number_format($payment->payments_count) }}</td>
+                  <td class="px-3 py-3">{{ number_format($payment->total_due) }}</td>
+                  <td class="px-3 py-3 text-emerald-600">{{ number_format($payment->total_paid) }}</td>
+                  <td class="px-3 py-3 text-red-600">{{ number_format(max((int) $payment->total_due - (int) $payment->total_paid, 0)) }}</td>
+                </tr>
+              @endforeach
+            </tbody>
+          </table>
+        </div>
+        {{ $payments->links() }}
+      @else
+        <p class="text-sm text-slate-500">No payments recorded for the selected filters.</p>
+      @endif
+    @else
+      @if($payments->count())
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-slate-200 text-sm">
+            <thead class="bg-slate-50 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+              <tr>
+                <th scope="col" class="px-3 py-3">Period</th>
+                <th scope="col" class="px-3 py-3">Amount Due</th>
+                <th scope="col" class="px-3 py-3">Amount Paid</th>
+                <th scope="col" class="px-3 py-3">Status</th>
+                <th scope="col" class="px-3 py-3">Paid On</th>
+                <th scope="col" class="px-3 py-3">Method</th>
+                <th scope="col" class="px-3 py-3">Reference</th>
+                <th scope="col" class="px-3 py-3">Collected By</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 bg-white text-slate-700">
+              @foreach($payments as $payment)
+                <tr>
+                  <td class="px-3 py-3 font-semibold text-slate-900">
+                    {{ \Carbon\Carbon::create($payment->year, $payment->month, 1)->format('F Y') }}
+                  </td>
+                  <td class="px-3 py-3">{{ number_format($payment->amount_due) }}</td>
+                  <td class="px-3 py-3 text-emerald-600">{{ number_format($payment->amount_paid) }}</td>
+                  <td class="px-3 py-3">
+                    <span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold uppercase {{ $payment->status === 'PAID' ? 'bg-emerald-100 text-emerald-700' : ($payment->status === 'PARTIAL' ? 'bg-amber-100 text-amber-700' : 'bg-slate-100 text-slate-600') }}">
+                      {{ $payment->status }}
+                    </span>
+                  </td>
+                  <td class="px-3 py-3">
+                    {{ $payment->paid_on ? $payment->paid_on->timezone(config('app.timezone'))->format('d M Y h:i A') : 'N/A' }}
+                  </td>
+                  <td class="px-3 py-3">{{ $payment->method ?: 'N/A' }}</td>
+                  <td class="px-3 py-3">{{ $payment->reference_no ?: 'N/A' }}</td>
+                  <td class="px-3 py-3">{{ optional($payment->collector)->name ?: 'N/A' }}</td>
+                </tr>
+              @endforeach
+            </tbody>
+          </table>
+        </div>
+        {{ $payments->links() }}
+      @else
+        <p class="text-sm text-slate-500">No transactions found for the selected filters.</p>
+      @endif
+    @endif
+  </section>
 </div>
 @endsection
