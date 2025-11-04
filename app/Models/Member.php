@@ -15,7 +15,7 @@ class Member extends Model
         'gender','dob','nid_no','institution_name','religion','nationality','blood_group',
         'nominee_name','nominee_relation','nominee_nid','nominee_religion','nominee_nationality',
         'mobile','email','occupation',
-        'present_address','permanent_address','ward','post_office','thana','district','postal_code',
+        'present_address','permanent_address',
         'join_date','status','photo_path','nominee_photo_path','remarks'
     ];
 

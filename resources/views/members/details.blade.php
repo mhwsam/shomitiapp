@@ -34,11 +34,6 @@
           ['label' => 'Occupation', 'value' => $member->occupation],
           ['label' => 'Present Address', 'value' => $member->present_address],
           ['label' => 'Permanent Address', 'value' => $member->permanent_address],
-          ['label' => 'Ward', 'value' => $member->ward],
-          ['label' => 'Post Office', 'value' => $member->post_office],
-          ['label' => 'Thana / Upazila', 'value' => $member->thana],
-          ['label' => 'District', 'value' => $member->district],
-          ['label' => 'Postal Code', 'value' => $member->postal_code],
       ],
       'Membership' => [
           ['label' => 'Member No', 'value' => $member->member_no],

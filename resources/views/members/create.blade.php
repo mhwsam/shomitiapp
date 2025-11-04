@@ -118,26 +118,6 @@
           <label for="permanent_address">Permanent Address</label>
           <textarea id="permanent_address" name="permanent_address" rows="3" placeholder="Village/Town, Upazila, District">{{ old('permanent_address') }}</textarea>
         </div>
-        <div class="space-y-2">
-          <label for="ward">Ward</label>
-          <input id="ward" name="ward" value="{{ old('ward') }}">
-        </div>
-        <div class="space-y-2">
-          <label for="post_office">Post Office</label>
-          <input id="post_office" name="post_office" value="{{ old('post_office') }}">
-        </div>
-        <div class="space-y-2">
-          <label for="thana">Thana / Upazila</label>
-          <input id="thana" name="thana" value="{{ old('thana') }}">
-        </div>
-        <div class="space-y-2">
-          <label for="district">District</label>
-          <input id="district" name="district" value="{{ old('district') }}">
-        </div>
-        <div class="space-y-2">
-          <label for="postal_code">Postal Code</label>
-          <input id="postal_code" name="postal_code" value="{{ old('postal_code') }}">
-        </div>
       </div>
     </section>
 
