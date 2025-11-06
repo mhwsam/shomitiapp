@@ -6,13 +6,14 @@
   <title>মিরপুর সমমনা ক্ষুদ্র ব্যবসায়ী সমবায় সমিতি লিমিটেড</title>
 
   <style>
-    @page { size: A4; margin: 12mm; }
+    @page { size: A4; margin: 0; } /* browser margins = 0; we control via .page padding */
 
     @media print {
       html, body {
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
         color: #000;
+        margin: 0;                 /* remove default browser margins */
       }
       .head-top, .rules li, .rules ol, .formno { color: #000 !important; }
       .header .title { color: #000 !important; font-weight: 800; }
@@ -20,9 +21,26 @@
       body { font-weight: 500; }
       .value { font-weight: 600; }
       .no-print, .no-print * { display: none !important; }
-      .page { box-shadow: none !important; }
-      /* slightly stronger watermark on paper (optional) */
-      .watermark { opacity: .08; }
+
+      /* FORCE exactly one A4 page with padding included */
+      .page{
+        width: 210mm;
+        height: 297mm;            /* exact A4 height */
+        padding: 12mm;            /* inner margin */
+        box-sizing: border-box;   /* padding inside height/width */
+        box-shadow: none !important;
+        page-break-before: avoid;
+        page-break-after: avoid;
+        page-break-inside: avoid;
+        overflow: hidden;         /* clip if something still overflows */
+      }
+
+      .watermark { opacity: .08; }  /* slightly stronger on paper */
+      /* tighten a few vertical gaps to be safe */
+      .row{ margin-bottom: 3mm; }
+      .signs{ margin-top: 20mm; }
+      .rules-wrap{ margin-top: 12mm; }
+      .f{ margin: 2mm 0; }
     }
 
     body { color: #111; margin: 0; background: #f5f5f5; }
@@ -39,30 +57,51 @@
     .toolbar button { background: #2563eb; color: #fff; border-color: #2563eb; }
     .toolbar button:hover { background: #1d4ed8; }
 
-    .page {
-      width: 210mm; min-height: 297mm; margin: 0 auto; background: #fff;
-      box-shadow: 0 0 0.8mm rgba(0,0,0,.15); padding: 14mm 14mm 12mm;
+    /* SCREEN LAYOUT — fixed width, padding inside */
+    .page{
+      width: 210mm;
+      margin: 0 auto;
+      background: #fff;
+      box-shadow: 0 0 0.8mm rgba(0,0,0,.15);
+      padding: 12mm;              /* same as print */
       font-family: system-ui,-apple-system,"Noto Sans Bengali","SolaimanLipi","Hind Siliguri",sans-serif;
       color: #111;
-      position: relative; /* needed for watermark positioning */
+      position: relative;         /* needed for watermark positioning */
+      box-sizing: border-box;
     }
 
     /* Watermark */
     .watermark{
-      position: absolute;
-      inset: 0;
-      margin: auto;
-      width: 70%;
-      max-width: 160mm;     /* adjust to taste */
-      opacity: .06;         /* faint on screen */
-      z-index: 0;
-      pointer-events: none; /* never blocks clicks */
-      transform: translateY(6mm); /* small vertical nudge if desired */
+      position: absolute; inset: 0; margin: auto;
+      width: 70%; max-width: 160mm; opacity: .06; z-index: 0;
+      pointer-events: none; transform: translateY(6mm);
     }
-    /* ensure page content sits above the watermark */
     .page > *:not(.watermark){ position: relative; z-index: 1; }
 
-    .head-top { display: flex; justify-content: space-between; font-size: 12px; color: #666; margin-bottom: 2mm; }
+    /* Top motto strip */
+    .head-top{
+      display: grid;
+      grid-template-columns: 1fr auto 1fr; /* left | center | right */
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 2mm;
+    }
+    .head-top .left  { text-align: left; }
+    .head-top .right { text-align: right; }
+    .head-top .center{ text-align: center; line-height: 1.15; }
+    .head-top .center .bismillah{
+      font-weight: 800;
+      display: inline-block;
+      padding-bottom: 0;          /* underline removed */
+      border-bottom: 0;
+      text-decoration: none;
+    }
+    .head-top .center .sub{
+      margin-top: 2px;
+      font-weight: 700;
+    }
 
     .header { text-align: center; border-bottom: 1px solid #bdbdbd; padding-bottom: 3mm; margin-bottom: 4mm; }
     .header .title { margin: 0 0 1mm; font-size: 22px; font-weight: 800; color: #118c34; }
@@ -82,13 +121,10 @@
     .chip.red { background: #c62828; margin-left: 24mm; }
     .formno { margin-left: auto; font-size: 13px; }
 
-    .member-box {
-      display: inline-block; border: 1px solid #111; padding: 1.5mm 6mm; border-radius: 2mm;
-      font-weight: 700; margin-top: 2mm; background: #fff;
-    }
+    .member-box { display: inline-block; border: 1px solid #111; padding: 1.5mm 6mm; border-radius: 2mm; font-weight: 700; margin-top: 2mm; background: #fff; }
 
     .fields { margin-top: 2mm; }
-    .f { display: flex; gap: 4mm; align-items: center; margin: 2.2mm 0; font-size: 14.5px; }
+    .f { display: flex; gap: 4mm; align-items: center; margin: 2mm 0; font-size: 14.5px; }
 
     .label { white-space: nowrap; }
 
@@ -105,7 +141,7 @@
 
     .pair { display: flex; gap: 6mm; align-items: center; width: 100%; }
 
-    .rules-wrap { display: flex; gap: 6mm; align-items: flex-start; margin-top: 14mm; padding-top: 4mm; }
+    .rules-wrap { display: flex; gap: 6mm; align-items: flex-start; margin-top: 12mm; padding-top: 4mm; }
     .rules { flex: 1; border: 1px solid #d84343; padding: 10mm 5mm 5mm; border-radius: 2.5mm; position: relative; }
     .rules .title {
       position: absolute; top: -12mm; left: 50%; transform: translateX(-50%);
@@ -120,7 +156,7 @@
     }
     .stamp img{ width: 100%; height: 100%; object-fit: cover; }
 
-    .signs { margin-top: 30mm; display: flex; justify-content: space-between; gap: 6mm; text-align: center; font-size: 13px; }
+    .signs { margin-top: 20mm; display: flex; justify-content: space-between; gap: 6mm; text-align: center; font-size: 13px; }
     .sign { flex: 1; position: relative; padding-top: 4mm; }
     .sign::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 0; border-top: 1px solid #111; margin: 0 4mm; }
     .sign .cap { margin-top: 2mm; color: #333; }
@@ -166,10 +202,14 @@
     <!-- Watermark (first child) -->
     <img class="watermark" src="{{ asset('images/watermark.jpeg') }}" alt="">
 
+    <!-- Motto strip -->
     <div class="head-top">
-      <div>সঞ্চয় করুন</div>
-      <div>বিসমিল্লাহির রাহমানির রাহীম</div>
-      <div>ভবিষ্যৎ গড়ুন</div>
+      <div class="left">একতা</div>
+      <div class="center">
+        <div class="bismillah">বিসমিল্লাহির রাহমানির রাহীম</div>
+        <div class="sub">শান্তি</div>
+      </div>
+      <div class="right">প্রগতি</div>
     </div>
 
     <div class="header">
