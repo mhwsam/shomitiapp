@@ -11,7 +11,7 @@
             margin: 12mm;
         }
 
-        @media print {
+        /* @media print {
 
             html,
             body {
@@ -25,7 +25,66 @@
             .no-print {
                 display: none !important;
             }
+        } */
+        @media print {
+
+            html,
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                color: #000;
+                /* Make default text 100% black in print */
+            }
+
+            /* Force light-gray texts to solid black when printing */
+            .head-top,
+            .rules li,
+            .rules ol,
+            .formno {
+                color: #000 !important;
+            }
+
+            /* Make headings/labels crisp and bold in print */
+            .header .title {
+                color: #000 !important;
+                font-weight: 800;
+            }
+
+            .label {
+                font-weight: 600;
+                color: #000;
+            }
+
+            /* Normalize text weights for print clarity */
+            body {
+                font-weight: 500;
+            }
+
+            /* base */
+            .value {
+                font-weight: 600;
+            }
+
+            .no-print,
+            .no-print * {
+                display: none !important;
+            }
+
+            /* optional: remove page shadow when printing */
+            .page {
+                box-shadow: none !important;
+            }
+
+            /* field value slightly bolder */
         }
+
+        /* Softer on screen, darker in print */
+        body {
+            color: #111;
+        }
+
+        /* screen */
+
 
         body {
             margin: 0;
@@ -152,6 +211,7 @@
 
         .chip.red {
             background: #c62828;
+            margin-left: 24mm;
         }
 
         .formno {
@@ -236,8 +296,8 @@
             display: flex;
             gap: 6mm;
             align-items: flex-start;
-            margin-top: 6mm;
-            border-top: 1px solid #ececec;
+            margin-top: 14mm;
+            /* border-top: 1px solid #ececec; */
             padding-top: 4mm;
         }
 
@@ -251,7 +311,7 @@
 
         .rules .title {
             position: absolute;
-            top: -8mm;
+            top: -12mm;
             left: 50%;
             transform: translateX(-50%);
             background: #d84343;
@@ -277,15 +337,23 @@
             width: 32mm;
             height: 40mm;
             border: 1px solid #111;
+            background: #fafafa;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 12px;
             color: #666;
+            overflow: hidden;
+        }
+
+        .stamp img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .signs {
-            margin-top: 18mm;
+            margin-top: 30mm;
             display: flex;
             justify-content: space-between;
             gap: 6mm;
@@ -296,7 +364,7 @@
         .sign {
             flex: 1;
             position: relative;
-            padding-top: 10mm;
+            padding-top: 4mm;
         }
 
         .sign::before {
@@ -373,6 +441,7 @@
         $nomineeNid = $member->nominee_nid;
         $nomineeReligion = $member->nominee_religion;
         $nomineeNationality = $member->nominee_nationality;
+        $nomineePhotoPath = $member->nominee_photo_path;
         $memberNo = $member->member_no;
         $joinDate = $formatDate($member->join_date);
     @endphp
@@ -427,7 +496,7 @@
                     @endif
                 </span>
             </div>
-                <div class="f"><span class="label">পেশা :</span><span class="dots">
+            <div class="f"><span class="label">পেশা :</span><span class="dots">
                     @if ($occupation)
                         <span class="value">{{ $occupation }}</span>
                     @endif
@@ -439,19 +508,19 @@
                     @endif
                 </span>
             </div>
-                 <div class="f"><span class="label">মাতার নাম :</span><span class="dots">
+            <div class="f"><span class="label">মাতার নাম :</span><span class="dots">
                     @if ($mother)
                         <span class="value">{{ $mother }}</span>
                     @endif
                 </span>
             </div>
-                       <div class="f"><span class="label">জাতীয় পরিচয় পত্র নং :</span><span class="dots">
+            <div class="f"><span class="label">জাতীয় পরিচয় পত্র নং :</span><span class="dots">
                     @if ($member->nid_no)
                         <span class="value">{{ $toBn($member->nid_no) }}</span>
                     @endif
                 </span>
             </div>
-        
+
             <div class="f"><span class="label">বর্তমান ঠিকানা :</span><span class="dots">
                     @if ($present)
                         <span class="value">{{ $present }}</span>
@@ -474,94 +543,54 @@
                 </span>
             </div>
 
-            <div class="f pair">
-                 <span class="label">জাতীয়তা :</span>{{ $nationalityValue }}<span class="dots"></span>
+            {{-- <div class="f pair">
+                <span class="label">জাতীয়তা :</span>{{ $nationalityValue }}<span class="dots"></span>
                 <span class="label">রক্তের গ্রুপ :</span>{{ $bloodGroup }}<span class="dots">
-              
-                </span>
-            </div>
-                 <div class="f pair">
-                 <span class="label">নমিনির নাম :</span>{{ $nomineeName }}<span class="dots"></span>
-                <span class="label">সম্পর্ক :</span>{{ $nomineeRelation }}<span class="dots">
-              
-                </span>
-            </div>
 
- 
-            <div class="f"><span class="label">নমিনির এনআইডি/জন্ম নিবন্ধন নং :</span><span class="dots">
-                    @if ($nomineeNid )
-                        <span class="value">{{ $nomineeNid  }}</span>
-                    @endif
                 </span>
-            </div>
-                <div class="f pair">
-                <span class="label">ধর্ম :</span>{{$nomineeReligion }}<span class="dots"></span>
-                <span class="label">জাতীয়তা :</span>{{$nomineeNationality}}<span class="dots"></span>
-            </div>
-            <div class="f"><span class="label">Religion :</span><span class="dots">
-                    @if ($religionValue)
-                        <span class="value">{{ $religionValue }}</span>
-                    @endif
-                </span>
-            </div>
-            <div class="f"><span class="label">Nationality :</span><span class="dots">
+            </div> --}}
+            <div class="f pair">
+                <span class="label">জাতীয়তা :</span>
+                <span class="dots">
                     @if ($nationalityValue)
                         <span class="value">{{ $nationalityValue }}</span>
                     @endif
                 </span>
-            </div>
-            <div class="f"><span class="label">Blood Group :</span><span class="dots">
+
+                <span class="label">রক্তের গ্রুপ :</span>
+                <span class="dots">
                     @if ($bloodGroup)
                         <span class="value">{{ $bloodGroup }}</span>
                     @endif
                 </span>
             </div>
-            <div class="f"><span class="label">Nominee Name :</span><span class="dots">
-                    @if ($nomineeName)
-                        <span class="value">{{ $nomineeName }}</span>
-                    @endif
-                </span>
-            </div>
-            <div class="f"><span class="label">Relation with Nominee :</span><span class="dots">
-                    @if ($nomineeRelation)
-                        <span class="value">{{ $nomineeRelation }}</span>
-                    @endif
-                </span>
-            </div>
-            <div class="f"><span class="label">Nominee NID :</span><span class="dots">
-                    @if ($nomineeNid)
-                        <span class="value">{{ $toBn($nomineeNid) }}</span>
-                    @endif
-                </span>
-            </div>
-            <div class="f"><span class="label">Nominee Religion :</span><span class="dots">
-                    @if ($nomineeReligion)
-                        <span class="value">{{ $nomineeReligion }}</span>
-                    @endif
-                </span>
-            </div>
-            <div class="f"><span class="label">Nominee Nationality :</span><span class="dots">
-                    @if ($nomineeNationality)
-                        <span class="value">{{ $nomineeNationality }}</span>
-                    @endif
-                </span>
-            </div>
-
-
-            <div class="f"><span class="label">মনোনীত সদস্যের নাম :</span><span class="dots"></span></div>
 
             <div class="f pair">
-                <span class="label">সম্পর্ক :</span><span class="dots"></span>
-                <span class="label">বয়স :</span><span class="dots"></span>
+                <span class="label">নমিনির নাম :</span>{{ $nomineeName }}<span class="dots"></span>
+                <span class="label">সম্পর্ক :</span>{{ $nomineeRelation }}<span class="dots">
+
+                </span>
             </div>
 
-            <div class="f"><span class="label">মনোনীত সদস্যের / অন্যান্য নিবন্ধ নং :</span><span
-                    class="dots"></span></div>
-            <div class="f"><span class="label">ঠিকানা :</span><span class="dots">
-                    @if ($district)
-                        <span class="value">{{ $district }}</span>
+
+            <div class="f"><span class="label">নমিনির এনআইডি/জন্ম নিবন্ধন নং :</span><span class="dots">
+                    @if ($nomineeNid)
+                        <span class="value">{{ $nomineeNid }}</span>
                     @endif
-                </span></div>
+                </span>
+            </div>
+            <div class="f pair">
+                <span class="label">ধর্ম :</span>{{ $nomineeReligion }}<span class="dots"></span>
+                <span class="label">জাতীয়তা :</span>{{ $nomineeNationality }}<span class="dots"></span>
+            </div>
+
+
+
+
+
+
+
+
         </div>
 
         <div class="rules-wrap">
@@ -574,7 +603,13 @@
                     <li>কার্যকরী কমিটির সাথে আলোচনা সাপেক্ষে সদস্যের নাম পরিবর্তন করা যাবে।</li>
                 </ol>
             </div>
-            <div class="stamp">নমিনির ছবি</div>
+            <div class="stamp">
+                @if ($nomineePhotoPath)
+                    <img src="{{ asset('storage/' . $nomineePhotoPath) }}" alt="{{ $nomineeName ?: $memberName }}" />
+                @else
+                    নমিনির ছবি
+                @endif
+            </div>
         </div>
 
         <div class="signs">
